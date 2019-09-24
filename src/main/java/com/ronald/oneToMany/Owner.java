@@ -11,10 +11,13 @@ public class Owner {
     @GeneratedValue
     private Long id;
     private String name;
+    // for many to many
+    /*@JoinTable
+    joinColumns = {@JoinColumn(name = "customer_id")},
+    inverseJoinColumns ={@JoinColumn(name = "phone_id")}*/
+
     @OneToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "owner_phone",
-            joinColumns = {@JoinColumn(name = "customer_id")},
-            inverseJoinColumns ={@JoinColumn(name = "phone_id")})
+    @JoinColumn(name = "owner_id")
     private Collection<Phone> phones;
 
     public Owner(){}

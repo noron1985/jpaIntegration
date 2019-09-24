@@ -15,7 +15,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 @SpringBootApplication
@@ -49,15 +48,15 @@ public class OneToOneUniApplication implements CommandLineRunner {
 		phones.add(phone1);
 		phones.add(phone2);
 		phones.add(phone3);
+		ownerRepository.save(new Owner("ronald", phones));
 
 		/*second way
 		Phone[] phones1 = {
 				new Phone("0484.111.123"),
 				new Phone("0484.445.123"),
 				new Phone("0484.999.541")};
-		Owner owner = new Owner("toto", new ArrayList<Phone>(Arrays.asList(phone1)));*/
-
-		ownerRepository.save(new Owner("ronald",phones));
+		Owner owner = new Owner("toto", new ArrayList<Phone>(Arrays.asList(phone1)));
+		ownerRepository.save(owner);*/
 
 	}
 }

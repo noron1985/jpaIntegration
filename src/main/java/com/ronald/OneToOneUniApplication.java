@@ -1,14 +1,16 @@
 package com.ronald;
 
-import com.ronald.oneToMany.Owner;
-import com.ronald.oneToMany.Phone;
+import com.ronald.manyToOneUni.Journey;
+import com.ronald.manyToOneUni.Ship;
+import com.ronald.oneToManyBi.Cruise;
+import com.ronald.oneToManyBi.Reservation;
+import com.ronald.oneToManyUni.Owner;
+import com.ronald.oneToManyUni.Phone;
 import com.ronald.oneToOneBi.Client;
 import com.ronald.oneToOneBi.CreditCard;
 import com.ronald.oneToOneUni.Address;
 import com.ronald.oneToOneUni.Customer;
-import com.ronald.repository.dao.ClientRepository;
-import com.ronald.repository.dao.CustomerRepository;
-import com.ronald.repository.dao.OwnerRepository;
+import com.ronald.repository.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @SpringBootApplication
 public class OneToOneUniApplication implements CommandLineRunner {
@@ -26,6 +29,12 @@ public class OneToOneUniApplication implements CommandLineRunner {
 	private ClientRepository clientRepository;
 	@Autowired
 	private OwnerRepository ownerRepository;
+	@Autowired
+	private CruiseRepository cruiseRepository;
+	@Autowired
+	private JourneyRepository journeyRepository;
+	@Autowired
+	private ShipRepository shipRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OneToOneUniApplication.class, args);
@@ -57,6 +66,23 @@ public class OneToOneUniApplication implements CommandLineRunner {
 				new Phone("0484.999.541")};
 		Owner owner = new Owner("toto", new ArrayList<Phone>(Arrays.asList(phone1)));
 		ownerRepository.save(owner);*/
+
+		Reservation reservation = new Reservation(999);
+		Reservation reservation1 = new Reservation(1000);
+		Reservation reservation2 = new Reservation(1001);
+		List<Reservation> reservations = new ArrayList<>();
+		reservations.add(reservation);
+		reservations.add(reservation1);
+		reservations.add(reservation2);
+
+		cruiseRepository.save(new Cruise("Croisière s'amuse", reservations));
+
+		Ship ship = new Ship("Liberty");
+		shipRepository.save(ship);
+
+		journeyRepository.save(new Journey("Voyage vers le centre de la Terre", ship));
+		journeyRepository.save(new Journey("Autre voyage", ship));
+
 
 	}
 }

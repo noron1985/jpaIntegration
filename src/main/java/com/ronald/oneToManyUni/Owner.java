@@ -1,4 +1,4 @@
-package com.ronald.oneToMany;
+package com.ronald.oneToManyUni;
 
 import javax.persistence.*;
 import java.util.Collection;

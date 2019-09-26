@@ -1,5 +1,7 @@
 package com.ronald;
 
+import com.ronald.many.to.many.Appointment;
+import com.ronald.many.to.many.Person;
 import com.ronald.manyToOneUni.Journey;
 import com.ronald.manyToOneUni.Ship;
 import com.ronald.oneToManyBi.Cruise;
@@ -16,9 +18,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @SpringBootApplication
 public class OneToOneUniApplication implements CommandLineRunner {
@@ -35,6 +35,11 @@ public class OneToOneUniApplication implements CommandLineRunner {
 	private JourneyRepository journeyRepository;
 	@Autowired
 	private ShipRepository shipRepository;
+	@Autowired
+	private AppointRepository appointmentRepo;
+	@Autowired
+	private PersonRepository personRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(OneToOneUniApplication.class, args);
@@ -83,6 +88,22 @@ public class OneToOneUniApplication implements CommandLineRunner {
 		journeyRepository.save(new Journey("Voyage vers le centre de la Terre", ship));
 		journeyRepository.save(new Journey("Autre voyage", ship));
 
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2019, Calendar.JANUARY, 15);
+		Appointment appointment = new Appointment(calendar.getTime());
+		calendar.set(2019, Calendar.AUGUST, 1);
+		Appointment appointment1 = new Appointment(calendar.getTime());
+
+		appointmentRepo.save(appointment);
+		appointmentRepo.save(appointment1);
+
+		Person person = new Person("ronald", "de souter", Arrays.asList(appointment));
+		Person person1 = new Person("rick", "sanchez", Arrays.asList(appointment));
+		Person person2 = new Person("morty", "jesaisplus", Arrays.asList(appointment, appointment1));
+
+		personRepository.save(person);
+		personRepository.save(person1);
+		personRepository.save(person2);
 
 	}
 }
